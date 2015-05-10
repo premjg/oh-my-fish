@@ -21,9 +21,10 @@ function fish_prompt
   set -l cwd (basename (prompt_pwd))
   set -l cwd_p "$green$cwd/"
 
-  set -l os_icon "$orange✈"
-  if [ uname = "Darwin" ]
-    set -l os_icon "$orange"
+  set os_icon "$orange✈"
+
+  if [ (uname) = "Darwin" ]
+    set os_icon "$orange"
   end
 
   if [ (_git_branch_name) ]
@@ -34,15 +35,16 @@ function fish_prompt
       set git_info "$git_info$red●"
     end
 
-    set git_info "$grey($git_info$grey) $normal"
+    set git_info "$grey($git_info$grey)$normal"
   end
 
-  set -l error_prompt " "
+  set prompt_end "$orange→$normal"
+
   if test $last_status != 0
-    set error_prompt " $red✕$normal "
+    set prompt_end "$red⚠$normal "
   end
 
-  echo -n -s $os_icon " " $cwd_p $git_info $error_prompt
+  echo -n -s $os_icon " " $cwd_p $git_info $prompt_end " "
 end
 
 function fish_right_prompt
