@@ -61,7 +61,7 @@ function fish_right_prompt
   set -l grey (set_color "#666666")
   set -l normal (set_color normal)
 
-  set -l time (date '+%I:%M')
+  set -l time (date '+%H:%M')
   set -l time_info "$grey⧖ $time$normal"
 
   echo -n -s $ruby_info " " $time_info
