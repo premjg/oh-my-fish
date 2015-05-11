@@ -21,15 +21,15 @@ function fish_prompt
   set -l cwd (basename (prompt_pwd))
   set -l cwd_p "$green$cwd/"
 
-  set os_icon "$orange✈"
+  set os_icon "$orange"
 
   if [ (uname) = "Darwin" ]
-    set os_icon "$orange"
+    set os_icon "$orange"
   end
 
   if [ (_git_branch_name) ]
     set -l git_branch $grey(_git_branch_name)
-    set git_info "$git_branch"
+    set git_info " $git_branch"
 
     if [ (_is_git_dirty) ]
       set git_info "$git_info$red●"
@@ -41,7 +41,7 @@ function fish_prompt
   set prompt_end "$orange→$normal"
 
   if test $last_status != 0
-    set prompt_end "$red⚠$normal "
+    set prompt_end "$red$normal "
   end
 
   echo -n -s $os_icon " " $cwd_p $git_info $prompt_end " "
@@ -54,8 +54,8 @@ function fish_right_prompt
   set ruby_info ""
   if type chruby >/dev/null 2>&1
     set ruby_version (chruby |grep \* |tr -d '* ruby-')
-    if [ ruby_version != "" ]
-      set ruby_info "$red◈ $ruby_version$normal"
+    if [ $ruby_version ]
+      set ruby_info "$red $ruby_version$normal"
     end
   end
 
@@ -64,7 +64,7 @@ function fish_right_prompt
   set -l normal (set_color normal)
 
   set -l time (date '+%H:%M')
-  set -l time_info "$grey⧖ $time$normal"
+  set -l time_info "$grey $time$normal"
 
   echo -n -s $ruby_info " " $time_info
 end
